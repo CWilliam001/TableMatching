@@ -74,6 +74,29 @@ const Display = () => {
         .then((res) => res.json())
         .then((data) => {
             const { bsp_matching } = data;
+            // console.log(bsp_matching);
+
+            const existingData = localStorage.getItem('searchData');
+
+            const  searchData = existingData ? JSON.parse(existingData) : [];
+
+            const searchDataObj = {
+                keyword,
+                searchResult: bsp_matching
+            };
+
+            searchData.push(searchDataObj);
+
+            const jsonString = JSON.stringify(searchData);
+
+            localStorage.setItem('searchData', jsonString);
+
+            const storedData = localStorage.getItem('searchData');
+
+            const storedDataObj = storedData ? JSON.parse(storedData) : [];
+
+            console.log(storedDataObj);
+
             setBspMatchingRows(bsp_matching);
         }) 
         .catch((err) => {
